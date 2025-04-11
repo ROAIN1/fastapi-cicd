@@ -20,9 +20,9 @@ jobs:
       env:
         EC2_SSH_KEY_B64: ${{ secrets.EC2_SSH_KEY_B64 }} # Base64 encoded private key from your secret
 
-    - name: Copy files to EC2
+    - name: Deploy FastAPI app to EC2
       run: |
-        scp -o StrictHostKeyChecking=no -i private_key.pem -r ./fastapi-app ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/fastapi-app/
+        scp -o StrictHostKeyChecking=no -i private_key.pem -r ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/fastapi-app/
       env:
         EC2_USER: ${{ secrets.EC2_USER }}
         EC2_HOST: ${{ secrets.EC2_HOST }}
