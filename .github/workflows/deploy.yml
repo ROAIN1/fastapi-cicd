@@ -22,7 +22,8 @@ jobs:
 
     - name: Deploy FastAPI app to EC2
       run: |
-        scp -o StrictHostKeyChecking=no -i private_key.pem -r ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/fastapi-app/
+        ssh -o StrictHostKeyChecking=no -i private_key.pem ${EC2_USER}@${EC2_HOST} "sudo mkdir -p /home/${EC2_USER}/fastapi-app && sudo chown -R ${EC2_USER}:${EC2_USER} /home/${EC2_USER}/fastapi-app"
+        scp -o StrictHostKeyChecking=no -i private_key.pem -r ./ ${EC2_USER}@${EC2_HOST}:/home/${EC2_USER}/fastapi-app/
       env:
         EC2_USER: ${{ secrets.EC2_USER }}
         EC2_HOST: ${{ secrets.EC2_HOST }}
